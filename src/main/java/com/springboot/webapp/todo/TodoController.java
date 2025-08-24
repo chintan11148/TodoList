@@ -5,9 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
+import jakarta.validation.Valid;
 
 @Controller
 @SessionAttributes("name")
@@ -30,14 +34,26 @@ public class TodoController {
     public String showNewTodos(ModelMap model) {
         String username = (String)model.get("name");
         Todo todo = new Todo(0, username, "", LocalDate.now().plusYears(1), false);
-        model.put("todo",todo);
+        model.put("todo",todo); 
         return "todo";
     }   
     
     @RequestMapping(value= "add-todos", method = RequestMethod.POST)
-    public String addNewTodos(ModelMap model, Todo todo) {
+    public String addNewTodos(ModelMap model, @Valid Todo todo, BindingResult result) {
+
+        if(result.hasErrors()){
+            return "todo";
+        }
+
         String username = (String)model.get("name");
         todoService.addTodos(username, todo.getDescription(), LocalDate.now().plusYears(1), false);
         return "redirect:list-todos";
     }  
+
+    @RequestMapping("delete-todos")
+    public String deleteTodo(@RequestParam int id) {
+        
+        todoService.deleteById(id);
+        return "redirect:list-todos";
+    }   
 }
