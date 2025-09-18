@@ -28,8 +28,6 @@ public class LoginController {
         if (authenticationService.authenticate(username, password)) {
             model.put("name", username);
             // Authentication
-            
-
             return "welcome";
         }
         model.put("errorMessage", "Invalid Credentials");

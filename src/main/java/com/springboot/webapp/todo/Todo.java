@@ -8,7 +8,7 @@ public class Todo {
     private int id;
     private String username;
 
-    @Size(min=10, message="Enter atleast 10 characters")
+    @Size(message="Enter atleast 10 characters")
     private String description;
     private LocalDate targetDate;
     private boolean done;

@@ -8,6 +8,7 @@
     <title>List Todos</title>
 </head>
 <body>
+    <%@ include file="common/navigation.jspf" %>
     <div class="container">
         <h2>Todos:</h2>
         <table class="table">
@@ -24,7 +25,6 @@
             <tbody>
                 <c:forEach items = "${todos}" var = "todo">
                     <tr>
-                        <td>${todo.id}</td>
                         <td>${todo.description}</td>
                         <td>${todo.targetDate}</td>
                         <td>${todo.done}</td>
